@@ -128,7 +128,6 @@ Perform the test by inputting the sample vectors, and adding argument `paired = 
 
 ```{r}
 my_flint_test <- t.test(flint_pb$pb_immediate, flint_pb$pb_2min, paired = TRUE)
-
 ```
 
 Look at the results for `my_flint_test`. Think about the outcome, and decide based on the *p*-value whether you have enough evidence to reject the null hypothesis that the mean lead concentration in immediate and 2-min flushing samples is the same. 
@@ -163,15 +162,17 @@ Our question is: "Are mean lead concentrations in water after 2-min flushing *LE
 
 Perform a one-sided, two-sample paired t-test:
 ```{r}
-flushed_less_ttest <- t.test(flint_pb$pb_immediate, 
-                             flint_pb$pb_2min, 
+flushed_less_ttest <- t.test(flint_pb$pb_2min, 
+                             flint_pb$pb_immediate, 
                              paired = TRUE, 
                              alternative = "less")
 ```
 
 Check out the results for `flushed_less_ttest`.
 
-On your own based on the results, **write a final statement using in-line referencing**.
+**Statement of test outcome, using two-sample, one-sided paired t-test:** 
+
+"Mean lead concentration (ppb) measured in water collected after 2 minutes of flushing (`r round(mean_flushed, 2)` $\pm$ `r round(sd_flushed, 2)`, n = `r n_flushed`) was significantly less than lead concentration in immediately collected water samples (`r round(mean_immediate, 2)` $\pm$ `r round(sd_immediate, 2)`, n = `r n_immediate`) by a paired two-sample, one-sided t-test (t(`r round(flushed_less_ttest$parameter, 2)`) = `r round(flushed_less_ttest$statistic, 2)`, *p* < 0.001)."
 
 ### Cohen's *d* effect size
 
@@ -188,7 +189,6 @@ $$SD_{pooled}=\sqrt{\frac{SD_{GroupA}^2 + SD_{GroupB}^2}{2}}$$
 We could write our own function to calculate the effect size (see Casey's materials for Lab 6!) as follows: 
 
 ```{r}
-
 # Creating a function called 'calc_d' to calculate Cohen's d effect size
 # Here, a and b will be our sample vectors 
 
@@ -212,6 +212,7 @@ flint_d <- effsize::cohen.d(flint_pb$pb_immediate, flint_pb$pb_2min, na.rm = TRU
 ```
 
 Then in our report, we would want to include the actual means of the samples, and the effect size, possibly the confidence interval for each, and then the *least interesting thing* shoud be the statement of significance associate with our t-test. 
+
 
 ### Making a table with kableExtra
 
@@ -247,8 +248,6 @@ trees_sub %>%
                 position = "left"
                 ) %>% 
   add_header_above(c("Black cherry tree metrics" = 3))
-  
-
 ```
 
 ...and many other customization options!
