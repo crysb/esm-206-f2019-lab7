@@ -1,5 +1,5 @@
 ---
-title: "One-way and paired t-test examples, Cohen's d effeect size, and a table"
+title: "One-way and paired t-test examples, Cohen's d effect size, and a table"
 subtitle: "ESM 206 take-home lab for Week 7"
 author: "Allison Horst"
 output: html_document
@@ -45,8 +45,7 @@ For more Flint residential testing and blood lead levels data: [michigan.gov](ht
 #### Read in and explore the Flint water data: 
 
 ```{r}
-flint_pb <- read_csv(here::here("lab_7_materials",
-                                "flint_water.csv")) %>% 
+flint_pb <- read_csv("flint_water.csv") %>% 
   clean_names() %>% 
   rename(pb_immediate = pb_bottle_1_ppb_first_draw, 
          pb_2min = pb_bottle_2_ppb_2_mins_flushing) 
@@ -56,12 +55,11 @@ We are asked: is there a significant difference between lead concentrations imme
 
 First, we'll look at the distributions & sample sizes:
 
-- With 271 observations each (note: there are 5 NA values in each sample), we have enough to say that by Central Limit Theorem we know the sampling distribution of means will be normal regardless of underlying population, so comparing means using a  t-test is OK if I think means is a useful metric of comparison.
+- With 271 observations each (note: there are 5 NA values in each sample), we have enough to say that by Central Limit Theorem we know the sampling distribution of means will be normal regardless of underlying population, so comparing means using a t-test is OK if I think means is a useful metric of comparison.
 
 - We should still always LOOK at the data, anyway: 
 
 ```{r}
-
 # Histograms:
 ggplot(flint_pb, aes(x = pb_immediate)) +
   geom_histogram()
@@ -77,7 +75,6 @@ ggplot(flint_pb, aes(sample = pb_2min)) +
   geom_qq()
 
 # They are NOT normally distributed; we'll still say we want to compare means, and can do that comfortably because of CLT (sampling distribution of the means will be normal).
-
 ```
 
 We should also look at some statistics for comparison: 
